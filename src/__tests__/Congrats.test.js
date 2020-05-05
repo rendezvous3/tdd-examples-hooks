@@ -2,8 +2,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { findByTestAttr, checkProps } from '../test/testUtils';
-import Congrats from './Congrats';
+import { findByTestAttr, checkProps } from '../../test/testUtils';
+import Congrats from '../Congrats';
 
 const defaultProps = { success: false };
 
@@ -15,6 +15,7 @@ const defaultProps = { success: false };
  */
 const setup = (props = {}) => {
   const setupProps = { ...defaultProps, ...props };
+  // eslint-disable-next-line react/jsx-props-no-spreading
   return shallow(<Congrats {...setupProps} />);
 };
 
