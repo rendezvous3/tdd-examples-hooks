@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from 'react';
 import { shallow } from 'enzyme';
 
@@ -7,15 +8,15 @@ import Congrats from './Congrats';
 const defaultProps = { success: false };
 
 /**
-* Factory function to create a ShallowWrapper for the Congrats component.
-* @function setup
-* @param {object} props - Component props specific to this setup.
-* @returns {ShallowWrapper}
-*/
-const setup = (props={}) => {
+ * Factory function to create a ShallowWrapper for the Congrats component.
+ * @function setup
+ * @param {object} props - Component props specific to this setup.
+ * @returns {ShallowWrapper}
+ */
+const setup = (props = {}) => {
   const setupProps = { ...defaultProps, ...props };
-  return shallow(<Congrats {...setupProps} />)
-}
+  return shallow(<Congrats {...setupProps} />);
+};
 
 test('renders without error', () => {
   const wrapper = setup();
