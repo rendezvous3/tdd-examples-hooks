@@ -12,10 +12,14 @@ const mockSecretWord = jest.fn();
  * Setup function for app component
  * @returns {ReactWrapper}
  */
-const setup = () => {
+const setup = (secretWord = 'party') => {
   mockSecretWord.mockClear();
   // eslint-disable-next-line import/no-named-as-default-member
   hookActions.getSecretWord = mockSecretWord;
+
+  const mockUseReducer = jest.fn().mockReturnValue([{ secretWord }, jest.fn()]);
+
+  React.useReducer = mockUseReducer;
 
   // use mount, because useEffect is not called on shallow
   // https://github.com/enzymejs/enzyme/issues/2086
@@ -45,6 +49,36 @@ describe('getSecretWord calls', () => {
     wrapper.setProps();
 
     expect(mockSecretWord).not.toHaveBeenCalled();
+  });
+});
+
+describe('secredWord is not null', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = setup('party');
+  });
+  test('renders app when secretWord is not null', () => {
+    const appComponent = findByTestAttr(wrapper, 'app');
+    expect(appComponent.exists()).toBe(true);
+  });
+  test('does not render spinner when secretWord is not null', () => {
+    const spinnerComponent = findByTestAttr(wrapper, 'spinner');
+    expect(spinnerComponent.exists()).toBe(false);
+  });
+});
+
+describe('secredWord is null', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = setup(null);
+  });
+  test('does not app when secretWord is null', () => {
+    const appComponent = findByTestAttr(wrapper, 'app');
+    expect(appComponent.exists()).toBe(false);
+  });
+  test('renders spinner when secretWord is null', () => {
+    const spinnerComponent = findByTestAttr(wrapper, 'spinner');
+    expect(spinnerComponent.exists()).toBe(true);
   });
 });
 

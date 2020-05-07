@@ -29,11 +29,25 @@ function App() {
     hookActions.getSecretWord(setSecretWord);
   }, []);
 
-  return (
-    <div data-test='app' className='App'>
-      <Input secretWord={state.secretWord} />
-    </div>
-  );
+  let content;
+  if (state.secretWord) {
+    content = (
+      <div data-test='app' className='App'>
+        <Input secretWord={state.secretWord} />
+      </div>
+    );
+  } else {
+    content = (
+      <div data-test='spinner' className='container'>
+        <div className='spinner-border' role='status'>
+          <span className='sr-only'>Loading...</span>
+          <p>Loading secret word</p>
+        </div>
+      </div>
+    );
+  }
+
+  return content;
 }
 
 export default App;
